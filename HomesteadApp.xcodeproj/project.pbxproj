@@ -77,6 +77,7 @@
 				1CB077D11A7C221B00488D72 /* Images.xcassets */,
 				1CB077D31A7C221B00488D72 /* MainMenu.xib */,
 				1CB077CD1A7C221B00488D72 /* Supporting Files */,
+				1CFBE5AF1A7C390C007948AE /* shell */,
 			);
 			path = HomesteadApp;
 			sourceTree = "<group>";
@@ -104,6 +105,13 @@
 				1CB077DF1A7C221B00488D72 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1CFBE5AF1A7C390C007948AE /* shell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = shell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -393,6 +401,7 @@
 				1CB077E61A7C221B00488D72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1CB077E71A7C221B00488D72 /* Build configuration list for PBXNativeTarget "HomesteadAppTests" */ = {
 			isa = XCConfigurationList;
@@ -401,6 +410,7 @@
 				1CB077E91A7C221B00488D72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
