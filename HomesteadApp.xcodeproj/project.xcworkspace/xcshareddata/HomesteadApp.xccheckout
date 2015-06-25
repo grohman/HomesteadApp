@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>B3F70216-4066-45F1-A5F9-2E5FA0734F4C</string>
+	<key>IDESourceControlProjectName</key>
+	<string>HomesteadApp</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0240633561D35FC8E1BF20062616B54B1EE71F82</key>
+		<string>https://github.com/grohman/HomesteadApp.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>HomesteadApp.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0240633561D35FC8E1BF20062616B54B1EE71F82</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/grohman/HomesteadApp.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>0240633561D35FC8E1BF20062616B54B1EE71F82</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0240633561D35FC8E1BF20062616B54B1EE71F82</string>
+			<key>IDESourceControlWCCName</key>
+			<string>HomesteadApp</string>
+		</dict>
+	</array>
+</dict>
+</plist>
