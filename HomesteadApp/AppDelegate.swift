@@ -135,7 +135,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func setOpenAtLoginActionState(OpenAtLoginAction: NSMenuItem) {
         let itemReferences = itemReferencesInLoginItems()
-        if let itemRef = itemReferences.existingReference {
+        let itemRef = itemReferences.existingReference
+        if itemRef != nil {
             OpenAtLoginAction.state = NSOnState
         } else {
             OpenAtLoginAction.state = NSOffState
@@ -148,23 +149,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func itemReferencesInLoginItems() -> (existingReference: LSSharedFileListItemRef?, lastReference: LSSharedFileListItemRef?) {
         let itemUrl : UnsafeMutablePointer<Unmanaged<CFURL>?> = UnsafeMutablePointer<Unmanaged<CFURL>?>.alloc(1)
-        if let appUrl : NSURL = NSURL.fileURLWithPath(NSBundle.mainBundle().bundlePath) {
+        let appUrl : NSURL = NSURL.fileURLWithPath(NSBundle.mainBundle().bundlePath)
             let loginItemsRef = LSSharedFileListCreate(nil, kLSSharedFileListSessionLoginItems.takeRetainedValue(), nil).takeRetainedValue() as LSSharedFileListRef?
             if loginItemsRef != nil {
                 let loginItems: NSArray = LSSharedFileListCopySnapshot(loginItemsRef, nil).takeRetainedValue() as NSArray
                 print("There are \(loginItems.count) login items")
-                if(loginItems.count > 0)
-                {
+                if(loginItems.count > 0) {
                     let lastItemRef: LSSharedFileListItemRef = loginItems.lastObject as! LSSharedFileListItemRef
                     for var i = 0; i < loginItems.count; ++i {
                         let currentItemRef: LSSharedFileListItemRef = loginItems.objectAtIndex(i) as! LSSharedFileListItemRef
-                        if LSSharedFileListItemResolve(currentItemRef, 0, itemUrl, nil) == noErr {
-                            if let urlRef: NSURL =  itemUrl.memory?.takeRetainedValue() {
-                                print("URL Ref: \(urlRef.lastPathComponent)")
-                                if urlRef.isEqual(appUrl) {
-                                    return (currentItemRef, lastItemRef)
-                                }
+                        let currentItemURL = LSSharedFileListItemCopyResolvedURL(currentItemRef, 0, nil)
+                        if(currentItemURL != nil) {
+                            let urlRef = currentItemURL.takeRetainedValue();
+                            if urlRef == appUrl {
+                                return (currentItemRef, lastItemRef)
                             }
+
                         }
                         else {
                             print("Unknown login application")
@@ -180,7 +180,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     return(nil,addatstart)
                 }
             }
-        }
         return (nil, nil)
     }
     
