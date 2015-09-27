@@ -8,22 +8,27 @@
 
 import Cocoa
 import AppKit
+import Foundation
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-
+    
+    var env = NSProcessInfo.processInfo().environment
+    
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var StartAction: NSMenuItem!
     @IBOutlet weak var SshAction: NSMenuItem!
     @IBOutlet weak var OpenAtLoginAction: NSMenuItem!
-
-
+    
+    
     let statusbarItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
+    
     
     @IBAction func StartActionClicked(sender: NSMenuItem) {
         let task = NSTask()
-        task.launchPath = "~/.composer/vendor/bin/homestead"
+        task.launchPath = NSHomeDirectory() + "/.composer/vendor/bin/homestead"
+        task.environment = env
         
         if(sender.state == NSOnState) {
             sender.state = NSOffState
@@ -37,7 +42,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         task.waitUntilExit()
         setStartActionState(StartAction)
     }
-
+    
+    
     @IBAction func OpenAtLoginActionClicked(sender: NSMenuItem) {
         let itemReferences = itemReferencesInLoginItems()
         let shouldBeToggled = (itemReferences.existingReference == nil)
@@ -59,13 +65,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         nil
                     )
                     sender.state = NSOnState
-                    println("Application was added to login items")
+                    print("Application was added to login items")
                 }
             } else {
                 if let itemRef = itemReferences.existingReference {
                     LSSharedFileListItemRemove(loginItemsRef,itemRef);
                     sender.state = NSOffState
-                    println("Application was removed from login items")
+                    print("Application was removed from login items")
                 }
             }
         }
@@ -108,7 +114,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func getHomesteadPid() -> Bool {
         let homesteadRunningTask = NSTask()
-
+        
         homesteadRunningTask.launchPath = "/bin/sh"
         homesteadRunningTask.arguments = ["-c", "/usr/bin/vagrant global-status | grep -i homestead| grep -i running | awk {'print $1'}"]
         
@@ -119,7 +125,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let homesteadRunningData = pipe.fileHandleForReading.readDataToEndOfFile()
         let homesteadRunning: String = NSString(data: homesteadRunningData, encoding: NSUTF8StringEncoding)! as String
-        print("homestead pid:" + homesteadRunning)
+        print("homestead pid:" + homesteadRunning, terminator: "")
         
         if(homesteadRunning == "") {
             return false;
@@ -141,12 +147,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func itemReferencesInLoginItems() -> (existingReference: LSSharedFileListItemRef?, lastReference: LSSharedFileListItemRef?) {
-        var itemUrl : UnsafeMutablePointer<Unmanaged<CFURL>?> = UnsafeMutablePointer<Unmanaged<CFURL>?>.alloc(1)
+        let itemUrl : UnsafeMutablePointer<Unmanaged<CFURL>?> = UnsafeMutablePointer<Unmanaged<CFURL>?>.alloc(1)
         if let appUrl : NSURL = NSURL.fileURLWithPath(NSBundle.mainBundle().bundlePath) {
             let loginItemsRef = LSSharedFileListCreate(nil, kLSSharedFileListSessionLoginItems.takeRetainedValue(), nil).takeRetainedValue() as LSSharedFileListRef?
             if loginItemsRef != nil {
                 let loginItems: NSArray = LSSharedFileListCopySnapshot(loginItemsRef, nil).takeRetainedValue() as NSArray
-                println("There are \(loginItems.count) login items")
+                print("There are \(loginItems.count) login items")
                 if(loginItems.count > 0)
                 {
                     let lastItemRef: LSSharedFileListItemRef = loginItems.lastObject as! LSSharedFileListItemRef
@@ -154,14 +160,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         let currentItemRef: LSSharedFileListItemRef = loginItems.objectAtIndex(i) as! LSSharedFileListItemRef
                         if LSSharedFileListItemResolve(currentItemRef, 0, itemUrl, nil) == noErr {
                             if let urlRef: NSURL =  itemUrl.memory?.takeRetainedValue() {
-                                println("URL Ref: \(urlRef.lastPathComponent)")
+                                print("URL Ref: \(urlRef.lastPathComponent)")
                                 if urlRef.isEqual(appUrl) {
                                     return (currentItemRef, lastItemRef)
                                 }
                             }
                         }
                         else {
-                            println("Unknown login application")
+                            print("Unknown login application")
                         }
                     }
                     //The application was not found in the startup list
@@ -179,8 +185,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(aNotification: NSNotification){
+        // usr local my ass
+        env["PATH"] = env["PATH"]!+":/usr/local/bin"
+        
         let icon = NSImage(named: "statusbarIcon");
-        icon?.setTemplate(true)
+        icon?.template = true
         statusMenu.autoenablesItems = false
         
         statusbarItem.image = icon

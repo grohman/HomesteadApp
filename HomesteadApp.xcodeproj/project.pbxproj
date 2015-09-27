@@ -77,7 +77,6 @@
 				1CB077D11A7C221B00488D72 /* Images.xcassets */,
 				1CB077D31A7C221B00488D72 /* MainMenu.xib */,
 				1CB077CD1A7C221B00488D72 /* Supporting Files */,
-				1CFBE5AF1A7C390C007948AE /* shell */,
 			);
 			path = HomesteadApp;
 			sourceTree = "<group>";
@@ -105,13 +104,6 @@
 				1CB077DF1A7C221B00488D72 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		1CFBE5AF1A7C390C007948AE /* shell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = shell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,7 +150,9 @@
 		1CB077C21A7C221B00488D72 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Grohman;
 				TargetAttributes = {
 					1CB077C91A7C221B00488D72 = {
@@ -267,6 +261,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -331,6 +326,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = HomesteadApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.grohman.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -342,6 +338,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = HomesteadApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.grohman.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -361,6 +358,7 @@
 				);
 				INFOPLIST_FILE = HomesteadAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.grohman.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HomesteadApp.app/Contents/MacOS/HomesteadApp";
 			};
@@ -377,6 +375,7 @@
 				);
 				INFOPLIST_FILE = HomesteadAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.grohman.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HomesteadApp.app/Contents/MacOS/HomesteadApp";
 			};
